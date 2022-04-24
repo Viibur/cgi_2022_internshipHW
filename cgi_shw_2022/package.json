@@ -1,0 +1,23 @@
+{
+  "name": "cgi_shw_2022",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build"
+  },
+  "dependencies": {
+    "@fawmi/vue-google-maps": "^0.9.67",
+    "core-js": "^3.8.3",
+    "element-plus": "^2.1.10",
+    "litepie-datepicker": "^1.0.14",
+    "suncalc": "^1.9.0",
+    "vue": "^3.2.13",
+    "vue-cal": "^4.2.0",
+    "vue3-google-map": "^0.10.0"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "~5.0.0",
+    "@vue/cli-service": "~5.0.0"
+  }
+}
