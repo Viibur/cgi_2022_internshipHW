@@ -17,7 +17,7 @@ export default {
   name: 'App',
   data() {
     return {
-      center: {lat:  59.196341034825565, lng: 24.831462479017766},
+      center: {lat: null, lng: null},
     }
   },
   methods: {
