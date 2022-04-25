@@ -1,19 +1,27 @@
 <template>
     <form>
-    <label>Latitude:</label>
-    <el-input-number :min="-90" :max="90" :controls="false" v-model="latitude" /><br>
-
-    <label>Longitude:</label>
-    <el-input-number :min="-180" :max="180" :controls="false" v-model="longitude" /><br>
-
-    <label for="datepicker">Date:</label>
-    <el-date-picker
-        v-model="date"
-        type="date"
-        :clearable="false"
-        placeholder="Vali kuupäev"
-      >
-      </el-date-picker><br><br>
+        <table id="inputTable">
+            <tr>
+                <td><label for="lat">Latitude:</label> </td>
+                <td><el-input-number id="lat" :min="-90" :max="90" :controls="false" v-model="latitude" /> </td>
+            </tr>
+            <tr>
+                <td><label for="lng">Longitude:</label> </td>
+                <td><el-input-number id="lng" :min="-180" :max="180" :controls="false" v-model="longitude" /> </td>
+            </tr>
+            <tr>
+                <td><label for="kuupaev">Date:</label></td>
+                <td> <el-date-picker
+                    id = "kuupaev"
+                    v-model="date"
+                    type="date"
+                    :clearable="false"
+                    placeholder="Vali kuupäev"
+                    border:none
+                >
+                </el-date-picker> </td>
+            </tr>
+        </table> <br>
     <button type="button" v-on:click="nightLength()"> Calculate </button>
     </form>
     <p>  {{ nightLengthPrev }} </p>
@@ -30,12 +38,12 @@ export default {
         MapElem,
     },
     data: ()=>({
-            latitude: 59.196341034825565,
-            longitude: 24.831462479017766,
-            date: null, //default is current date
-            nightLengthPrev: null,
-            nightLengthCurr: null,
-            mapcords: {lat: 59.196341034825565, lng: 24.831462479017766}
+        latitude: 59.196341034825565,
+        longitude: 24.831462479017766,
+        date: new Date(), 
+        nightLengthPrev: null,
+        nightLengthCurr: null,
+        mapcords: {lat: 59.196341034825565, lng: 24.831462479017766}
         }),
     methods: {
         nightLength() {
@@ -88,3 +96,17 @@ export default {
     },
 };
 </script>
+
+<style scoped>
+#inputTable{
+    align-content: center;
+    border-spacing: 0;
+    margin-left:auto; 
+    margin-right:auto;
+}
+td{
+    padding: 10px 20px;
+    border: 1px solid #000;
+    text-align: left;
+}
+</style>

@@ -3,7 +3,7 @@
       :center="center"
       :zoom="7"
       map-type-id="terrain"
-      style="width: 40vw; height: 320px"
+      style="width: 40vw; height: 320px; margin:0 auto;"
       @click="toParent"
   >
   <GMapMarker
@@ -12,7 +12,7 @@
   </GMapMap>
 </template>
 
-<script >
+<script>
 export default {
   name: 'App',
   data() {
@@ -30,6 +30,6 @@ export default {
           this.center.lng = event.latLng.lng()
           this.$emit('mapcords',this.center)
       }
-  }
+  },
 }
 </script>
