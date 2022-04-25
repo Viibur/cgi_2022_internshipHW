@@ -96,7 +96,7 @@ export default {
     },
     mounted(){
         this.nightLengthAst()
-        this.$refs.map.change(this.mapcords)
+        this.$refs.map.onLoad(this.mapcords)
     },
 };
 </script>

@@ -9,7 +9,7 @@ import  VueGoogleMaps from '@fawmi/vue-google-maps'
 const app = createApp(App)
 app.use(VueGoogleMaps,{
     load:{
-        key:'AIzaSyDjohJNE3DLtPuPS36-9ROF41Hfdwnn',
+        key:'AIzaSyB_hYPpu4I9Ys7cTz-XyZ54dpBerm1C',
     },
 })
 app.use(ElementPlus)
