@@ -1,5 +1,5 @@
 <template>
-  <Header title = "Teretulemast astronoomilise öö pikkuse kalkulaatorisse" />
+  <Header title = "Teretulemast öö pikkuse kalkulaatorisse" />
   <LatLong />
 </template>
 

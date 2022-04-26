@@ -8,8 +8,10 @@
   },
   "dependencies": {
     "@fawmi/vue-google-maps": "^0.9.67",
+    "@joergdietrich/leaflet.terminator": "^1.1.0",
     "core-js": "^3.8.3",
     "element-plus": "^2.1.10",
+    "leaflet": "^1.8.0",
     "litepie-datepicker": "^1.0.14",
     "suncalc": "^1.9.0",
     "vue": "^3.2.13",
@@ -17,6 +19,7 @@
     "vue3-google-map": "^0.10.0"
   },
   "devDependencies": {
+    "@vue-leaflet/vue-leaflet": "^0.6.1",
     "@vue/cli-plugin-babel": "~5.0.0",
     "@vue/cli-service": "~5.0.0"
   }
