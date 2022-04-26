@@ -1,28 +1,30 @@
 <template>
-  <Header title = "Teretulemast öö pikkuse kalkulaatorisse" />
-  <LatLong />
+<nav>
+    <router-link to="/">Kalk</router-link> |
+    <router-link to="/moisted">Mõisted</router-link>
+  </nav>
+  <router-view />
+  <Footer />
 </template>
 
 <script>
-import Header from './components/Header.vue'
-import LatLong from './components/LatLong.vue'
-
+import Footer from '@/components/Footer.vue'
 export default {
-  name: 'App',
-  components: {
-    Header,
-    LatLong,
-  },
+  components:{
+    Footer,
+  }
 }
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+nav {
+  position: fixed;
+  width: 100%;
+  top: 20px;
+  font-size: 14px;
 }
+nav a {
+    font-weight: bold;
+    color: #2c3e50;
+  }
 </style>
