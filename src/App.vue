@@ -1,26 +1,16 @@
 <template>
-<nav>
+  <nav>
     <router-link to="/">Kalk</router-link> |
     <router-link to="/moisted">Mõisted</router-link>
   </nav>
   <router-view />
-  <Footer />
 </template>
-
-<script>
-import Footer from '@/components/Footer.vue'
-export default {
-  components:{
-    Footer,
-  }
-}
-</script>
 
 <style>
 nav {
-  position: fixed;
+  position: relative;
   width: 100%;
-  top: 20px;
+  margin-top: 0%;
   font-size: 14px;
 }
 nav a {

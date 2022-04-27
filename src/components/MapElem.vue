@@ -49,21 +49,33 @@ export default {
     }
   },
   methods: {
+    /**
+     * Meetod nii Google map-i kui ka selle markeri asukoha muutmiseks (kui kasutaja manuaaselt kordinaate muudab)
+     */
       change(mapcords){
         this.centerMap.lat = mapcords.lat
         this.centerMap.lng = mapcords.lng
-          this.centerMarker.lat = mapcords.lat
-          this.centerMarker.lng = mapcords.lng
+        this.centerMarker.lat = mapcords.lat
+        this.centerMarker.lng = mapcords.lng
       },
+      /**
+       * Meetod Google map-i kordinaatide ahelas üles LatLong-le emittimiseks
+       */
       toParent(event){
           this.centerMarker.lat = event.latLng.lat()
           this.centerMarker.lng = event.latLng.lng()
           this.$emit('mapcords',this.centerMarker)
       },
+      /**
+       * Meetod terminaator joone mapi kuvatava kuupäeva ja kellaaja muutmiseks 
+       */
       onTermDateChange(){
           this.terminator.setTime(this.date)
       }
   },
+  /**
+   * Esmalt komponent renderdades loo Leaflet map ja pane sinna terminator(öö/päeva piirjoon) layer peale
+   */
   mounted() {
     this.leafletMap = L.map("mapContainer").setView([0,0], 1);
     L.tileLayer("http://{s}.tile.osm.org/{z}/{x}/{y}.png").addTo(this.leafletMap);
