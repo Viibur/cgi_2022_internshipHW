@@ -1,12 +1,13 @@
 <template>
+    <div id="content">
     <form>
         <table id="inputTable">
             <tr>
-                <td><label for="lat">Latitude:</label> </td>
+                <td><label for="lat">Geograafiline laius:</label> </td>
                 <td><el-input-number id="lat" :min="-90" :max="90" :controls="false" v-model="latitude" /> </td>
             </tr>
             <tr>
-                <td><label for="lng">Longitude:</label> </td>
+                <td><label for="lng">Geograafiline pikkus:</label> </td>
                 <td><el-input-number id="lng" :min="-180" :max="180" :controls="false" v-model="longitude" /> </td>
             </tr>
             <tr>
@@ -22,12 +23,13 @@
                 </el-date-picker> </td>
             </tr>
         </table> <br>
-    <button type="button" v-on:click="nightLengthAst();setMapScreen()"> Arvuta astronoomiline öö </button>
-    <button type="button" v-on:click="nightLengthStS();setMapScreen()"> Arvuta horisondi suhtes öö </button>
+    <button type="button" v-on:click="nightLengthAst();setMapScreen()"> Arvuta astronoomiline öö </button><br>
+    <button id="alumine" type="button" v-on:click="nightLengthStS();setMapScreen()"> Arvuta horisondi suhtes öö </button>
     </form>
     <p>  {{ nightLengthPrev }} </p>
     <p> {{ nightLengthCurr }} </p>
     <MapElem v-on:mapcords="cordsFromMap" ref="map" />
+    </div>
 </template>
 
 <script>
@@ -150,15 +152,20 @@ export default {
 </script>
 
 <style scoped>
+#content{
+    text-align: left;
+}
 #inputTable{
-    align-content: center;
+    text-align: left;
     border-spacing: 0;
-    margin-left:auto; 
-    margin-right:auto;
+    margin-left: 0;
 }
 #inputtable td{
     padding: 10px 20px;
     border: 1px solid #000;
     text-align: left;
+}
+#alumine{
+    margin-top: 5px;
 }
 </style>

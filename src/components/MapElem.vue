@@ -1,36 +1,39 @@
-<template>
-<table id="mapsTable">
-  <tr>
-    <td />
-      <td>
-        <el-date-picker
-          id = "kuupaev ja kellaaeg"
-          v-model="date"
-          type="datetime"
-          :clearable="false"
-          placeholder="Vali kuupäev"
-          border:none
-          @change="onTermDateChange()"
-          />
+<template> 
+  <div>
+    <table id="mapsTable">
+      <tr>
+        <td />
+          <td>
+            <label>Terminaator joone kuupäeva ja kellaaeg: </label>
+            <el-date-picker
+              id = "kuupaev ja kellaaeg"
+              v-model="date"
+              type="datetime"
+              :clearable="false"
+              placeholder="Vali kuupäev"
+              border:none
+              @change="onTermDateChange()"
+              />
+            </td>
+        </tr>
+        <tr>
+          <td>
+            <GMapMap
+                :center="centerMap"
+                :zoom="7"
+                map-type-id="terrain"
+                style="width: 40vw; height: 320px;text-align:left;"
+                @click="toParent"
+            >
+            <GMapMarker
+              :position="centerMarker"
+            />
+            </GMapMap>
         </td>
-    </tr>
-    <tr>
-      <td>
-        <GMapMap
-            :center="centerMap"
-            :zoom="7"
-            map-type-id="terrain"
-            style="width: 40vw; height: 320px;"
-            @click="toParent"
-        >
-        <GMapMarker
-          :position="centerMarker"
-        />
-        </GMapMap>
-     </td>
-     <td> <div id="mapContainer"></div></td>
-    </tr>
-  </table>
+        <td> <div id="mapContainer"></div></td>
+      </tr>
+    </table>
+  </div>
 </template>
 
 <script>
@@ -90,9 +93,7 @@ export default {
     margin:0 auto;
 }
 #mapsTable{
-    align-content: center;
+    text-align: left;
     border-spacing: 0;
-    margin-left:auto; 
-    margin-right:auto;
 }
 </style>
