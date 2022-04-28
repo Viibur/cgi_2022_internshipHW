@@ -113,7 +113,7 @@ export default {
                 startMinute = startTime.getMinutes(),
                 endHour = endTime.getHours(),
                 endMinute =  endTime.getMinutes()
-            if (isNaN(startHour) || isNaN(endHour)) return "puudub etteantud kuupäeval"
+            if (isNaN(startHour) || isNaN(endHour)) return " puudub etteantud kuupäeval"
 
             return " kuupäevade " + startTime.getDate().toString().padStart(2,"0")+":"+startTime.getMonth().toString().padStart(2,"0") +
                     " - "+ endTime.getDate().toString().padStart(2,"0")+":"+endTime.getMonth().toString().padStart(2,"0")+

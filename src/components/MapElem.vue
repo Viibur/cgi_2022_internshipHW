@@ -20,9 +20,9 @@
           <td>
             <GMapMap
                 :center="centerMap"
-                :zoom="7"
+                :zoom="6.8"
                 map-type-id="terrain"
-                style="width: 40vw; height: 320px;text-align:left;"
+                style="width: 39vw; height: 315px;text-align:left;"
                 @click="toParent"
             >
             <GMapMarker
@@ -62,7 +62,7 @@ export default {
         this.centerMarker.lng = mapcords.lng
       },
       /**
-       * Meetod Google map-i kordinaatide ahelas üles LatLong-le emittimiseks
+       * Meetod Google map-i kordinaatide ahelas üles LatLong-ile emittimiseks
        */
       toParent(event){
           this.centerMarker.lat = event.latLng.lat()
@@ -80,7 +80,7 @@ export default {
    * Esmalt komponent renderdades loo Leaflet map ja pane sinna terminator(öö/päeva piirjoon) layer peale
    */
   mounted() {
-    this.leafletMap = L.map("mapContainer").setView([0,0], 1);
+    this.leafletMap = L.map("mapContainer").setView([15,30], 1);
     L.tileLayer("http://{s}.tile.osm.org/{z}/{x}/{y}.png").addTo(this.leafletMap);
     this.terminator = terminator().addTo(this.leafletMap)
   },
@@ -88,8 +88,8 @@ export default {
 </script>
 <style scoped>
 #mapContainer {
-    width: 40vw; 
-    height: 320px;
+    width: 39vw; 
+    height: 315px;
     margin:0 auto;
 }
 #mapsTable{
