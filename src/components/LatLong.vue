@@ -1,19 +1,19 @@
 <template>
-    <div id="content">
+    <div class="userInput">
     <form>
-        <table id="inputTable">
+        <table class="inputTable">
             <tr>
-                <td><label for="lat">Geograafiline laius:</label> </td>
-                <td><el-input-number id="lat" :min="-90" :max="90" :controls="false" v-model="latitude" /> </td>
+                <td><label for="latitude">Geograafiline laius:</label> </td>
+                <td><el-input-number id="latitude" :min="-90" :max="90" :controls="false" v-model="latitude" /> </td>
             </tr>
             <tr>
-                <td><label for="lng">Geograafiline pikkus:</label> </td>
-                <td><el-input-number id="lng" :min="-180" :max="180" :controls="false" v-model="longitude" /> </td>
+                <td><label for="longitude">Geograafiline pikkus:</label> </td>
+                <td><el-input-number id="longitude" :min="-180" :max="180" :controls="false" v-model="longitude" /> </td>
             </tr>
             <tr>
-                <td><label for="kuupaev">Kuupäev:</label></td>
+                <td><label for="datePickerCalculator">Kuupäev:</label></td>
                 <td> <el-date-picker
-                    id = "kuupaev"
+                    id = "datePickerCalculator"
                     v-model="date"
                     type="date"
                     :clearable="false"
@@ -23,8 +23,8 @@
                 </el-date-picker> </td>
             </tr>
         </table> <br>
-    <button type="button" v-on:click="nightLengthAst();setMapScreen()"> Arvuta astronoomiline öö </button><br>
-    <button id="alumine" type="button" v-on:click="nightLengthStS();setMapScreen()"> Arvuta horisondi suhtes öö </button>
+    <button type="button" v-on:click="nightLengthAstronomical();setMapScreen();"> Arvuta astronoomiline öö </button><br>
+    <button class="lowerButton" type="button" v-on:click="nightLengthSunsetToSunrise();setMapScreen();"> Arvuta horisondi suhtes öö </button>
     </form>
     <p>  {{ nightLengthPrev }} </p>
     <p> {{ nightLengthCurr }} </p>
@@ -47,72 +47,70 @@ export default {
         nightLengthPrev: null,
         nightLengthCurr: null,
         mapcords: {lat: 58.38156156810358, lng: 26.73048025196609},
-        lastButtonClicked: "astronoomiline", //Võib olla kas "astronoomiline" või "horisont" vastavalt mis nuppu viimati vajutati
+        lastButtonClicked: "astronomical", //Can be 'astronomical' or 'horizon' based on the last button clicked
         }),
     methods: {
         /**
-         * Meetod astronoomilise öö pikkuse arvutamiseks, kastuab kasutaja etteantud väärtusi või default (Tartu, hetkekuupäev)
-         * Arvutab nii tänasega lõppeva, kui ka tänasega algava öö pikkuse
+         * Method for calculating astronomical night length
+         * Calculates two night lengths (night ends given date and night starts given date)
          */
-        nightLengthAst() {
-            this.lastButtonClicked = "astronoomiline"
+        nightLengthAstronomical() {
+            this.lastButtonClicked = "astronomical"
             this.latitude = parseFloat(this.latitude)
             this.longitude = parseFloat(this.longitude)
 
-            //Tänase kuupäevaga läbi saanud öö pikkuse arvutamiseks
-            let nightBeginYesterday = new Date(this.date.getTime())
-            let nightEndToday = new Date(this.date.getTime() + 86400000)
-            let startTimeYesterday = SunCalc.getTimes(nightBeginYesterday,this.latitude,this.longitude).nauticalDusk
-            let endTimeToday = SunCalc.getTimes(nightEndToday,this.latitude,this.longitude).nauticalDawn
+            //Night length for the night that ended at the given date
+            const nightBeginYesterday = new Date(this.date.getTime())
+            const nightEndToday = new Date(this.date.getTime() + 86400000)
+            const startTimeYesterday = SunCalc.getTimes(nightBeginYesterday,this.latitude,this.longitude).nauticalDusk
+            const endTimeToday = SunCalc.getTimes(nightEndToday,this.latitude,this.longitude).nauticalDawn
             this.nightLengthPrev = "Astronoomiline öö"+this.formatAnswer(startTimeYesterday,endTimeToday)
 
-            //Tänase kuupäevaga algava öö pikkuse arvutamiseks
-            let nightBeginToday = new Date(this.date.getTime() + 86400000)
-            let nightEndTomorrow = new Date(this.date.getTime() + 2*86400000)
-            let startTimeToday = SunCalc.getTimes(nightBeginToday,this.latitude,this.longitude).nauticalDusk
-            let endTimeTomorrow = SunCalc.getTimes(nightEndTomorrow,this.latitude,this.longitude).nauticalDawn
+            //Night length for the night that starts from the given date
+            const nightBeginToday = new Date(this.date.getTime() + 86400000)
+            const nightEndTomorrow = new Date(this.date.getTime() + 2*86400000)
+            const startTimeToday = SunCalc.getTimes(nightBeginToday,this.latitude,this.longitude).nauticalDusk
+            const endTimeTomorrow = SunCalc.getTimes(nightEndTomorrow,this.latitude,this.longitude).nauticalDawn
             this.nightLengthCurr = "Astronoomiline öö"+this.formatAnswer(startTimeToday,endTimeTomorrow)
         },
         /**
-         * Meetod horisondi suhtes öö pikkuse arvutamiseks, kastuab kasutaja etteantud väärtusi või default (Tartu, hetkekuupäev)
-         * Arvutab nii tänasega lõppeva, kui ka tänasega algava öö pikkuse
+         * Method for calculating night length sunrise to sunset
+         * Calculates two night lengths (night ends given date and night starts given date)
          */
-        nightLengthStS() {
-            this.lastButtonClicked = "horisont"
+        nightLengthSunsetToSunrise() {
+            this.lastButtonClicked = "horizon"
             this.latitude = parseFloat(this.latitude)
             this.longitude = parseFloat(this.longitude)
 
-            //Tänase kuupäevaga läbi saanud öö pikkuse arvutamiseks
-            let nightBeginYesterday = new Date(this.date.getTime())
-            let nightEndToday = new Date(this.date.getTime() + 86400000)
-            let startTimeYesterday = SunCalc.getTimes(nightBeginYesterday,this.latitude,this.longitude).sunset
-            let endTimeToday = SunCalc.getTimes(nightEndToday,this.latitude,this.longitude).sunrise
+            //Night length for the night that ended at the given date
+            const nightBeginYesterday = new Date(this.date.getTime())
+            const nightEndToday = new Date(this.date.getTime() + 86400000)
+            const startTimeYesterday = SunCalc.getTimes(nightBeginYesterday,this.latitude,this.longitude).sunset
+            const endTimeToday = SunCalc.getTimes(nightEndToday,this.latitude,this.longitude).sunrise
             this.nightLengthPrev = "Horisondi suhtes öö"+this.formatAnswer(startTimeYesterday,endTimeToday)
 
-            //Tänase kuupäevaga algava öö pikkuse arvutamiseks
-            let nightBeginToday = new Date(this.date.getTime() + 86400000)
-            let nightEndTomorrow = new Date(this.date.getTime() + 2*86400000)
-            let startTimeToday = SunCalc.getTimes(nightBeginToday,this.latitude,this.longitude).sunset
-            let endTimeTomorrow = SunCalc.getTimes(nightEndTomorrow,this.latitude,this.longitude).sunrise
+            //Night length for the night that starts from the given date
+            const nightBeginToday = new Date(this.date.getTime() + 86400000)
+            const nightEndTomorrow = new Date(this.date.getTime() + 2*86400000)
+            const startTimeToday = SunCalc.getTimes(nightBeginToday,this.latitude,this.longitude).sunset
+            const endTimeTomorrow = SunCalc.getTimes(nightEndTomorrow,this.latitude,this.longitude).sunrise
             this.nightLengthCurr = "Horisondi suhtes öö"+this.formatAnswer(startTimeToday,endTimeTomorrow)
         },
         /**
          * Abimeetod kahe kuupäeva vahelise hh:mm vahe arvutamiseks
          */
         dateDiff(dateBegin, dateEnd){
-            let duration = dateEnd.getTime() - dateBegin.getTime()
-            var minutes = Math.floor((duration / (1000 * 60)) % 60),
-                hours = Math.floor((duration / (1000 * 60 * 60)) % 24);
+            const duration = dateEnd.getTime() - dateBegin.getTime()
+            const minutes = Math.floor((duration / (1000 * 60)) % 60)
+            const hours = Math.floor((duration / (1000 * 60 * 60)) % 24)
             return hours.toString().padStart(2,"0") + ":" + minutes.toString().padStart(2,"0");
         },
-        /**
-         * Abimeetod kahe kuupäeva vahelise aja vastuseks formattimiseks
-         */
+        // Method for formatting answer between two dates
         formatAnswer(startTime,endTime){
-            var startHour = startTime.getHours(),
-                startMinute = startTime.getMinutes(),
-                endHour = endTime.getHours(),
-                endMinute =  endTime.getMinutes()
+            const startHour = startTime.getHours()
+            const startMinute = startTime.getMinutes()
+            const endHour = endTime.getHours()
+            const endMinute =  endTime.getMinutes()
             if (isNaN(startHour) || isNaN(endHour)) return " puudub etteantud kuupäeval"
 
             return " kuupäevade " + startTime.getDate().toString().padStart(2,"0")+":"+startTime.getMonth().toString().padStart(2,"0") +
@@ -125,17 +123,16 @@ export default {
                     " tundi"
         },
         /**
-         * Meetod google mapilt kordinaatide saamiseks ja viimati oleva nupu vajutuse järgi 
-         * Kasutajale vastuse kuvamine
+         * Method for getting coordinates from Google map and calulating last clickked button data
          */
         cordsFromMap(center){
             this.latitude = center.lat
             this.longitude = center.lng
-            if (this.lastButtonClicked === "astronoomiline") this.nightLengthAst();
-            else this.nightLengthStS();
+            if (this.lastButtonClicked === "astronomical") this.nightLengthAstronomical();
+            else this.nightLengthSunsetToSunrise();
         },
         /**
-         * Meetod mis muudab käsitsi lat/lng inputi muutmisel ka mapi kordinaate
+         * Method for setting map cordinates from user input
          */
         setMapScreen(){
             this.mapcords.lat = this.latitude
@@ -144,28 +141,23 @@ export default {
         }
     },
     mounted(){
-        //Esialgse vastuse ja mapi paika panemiseks
-        this.nightLengthAst()
+        //On load data and map cords
+        this.nightLengthAstronomical()
         this.$refs.map.change(this.mapcords)
     },
 };
 </script>
 
 <style scoped>
-#content{
+.userInput{
     text-align: left;
 }
-#inputTable{
+.inputTable{
     text-align: left;
     border-spacing: 0;
     margin-left: 0;
 }
-#inputtable td{
-    padding: 10px 20px;
-    border: 1px solid #000;
-    text-align: left;
-}
-#alumine{
+.lowerButton{
     margin-top: 5px;
 }
 </style>

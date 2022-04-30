@@ -1,5 +1,5 @@
 <template>
-  <div id="kalk">
+  <div class="night-length-calculator">
       <Header title = "Teretulemast öö pikkuse kalkulaatorisse" />
       <LatLong />
   </div>
@@ -18,8 +18,8 @@ export default {
 </script>
 
 <style>
-#kalk{
+.night-length-calculator  {
   text-align: left;
-  padding-left: 1%;
+  padding-left: 1rem;
 }
 </style>

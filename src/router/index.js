@@ -1,17 +1,17 @@
 import { createRouter, createWebHistory } from "vue-router";
-import Moisted from "@/views/MoistedView.vue";
-import Kalkulaator from '@/views/KalkulaatorView.vue'
+import Definitions from "@/views/DefinitionView.vue";
+import Calculator from '@/views/CalculatorView.vue'
 
 const routes = [
     {
         path: "/",
-        name: "kalkulaator",
-        component: Kalkulaator,
+        name: "calculator",
+        component: Calculator,
     },
     {
         path: "/moisted",
-        name: "mõisted",
-        component: Moisted,
+        name: "definitions",
+        component: Definitions,
     },
 ];
 

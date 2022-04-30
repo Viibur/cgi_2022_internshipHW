@@ -1,38 +1,30 @@
 <template> 
-  <div>
-    <table id="mapsTable">
-      <tr>
-        <td />
-          <td>
-            <label>Terminaator joone kuupäeva ja kellaaeg: </label>
-            <el-date-picker
-              id = "kuupaev ja kellaaeg"
-              v-model="date"
-              type="datetime"
-              :clearable="false"
-              placeholder="Vali kuupäev"
-              border:none
-              @change="onTermDateChange()"
-              />
-            </td>
-        </tr>
-        <tr>
-          <td>
-            <GMapMap
-                :center="centerMap"
-                :zoom="6.8"
-                map-type-id="terrain"
-                style="width: 38vw; height: 315px;text-align:left;"
-                @click="toParent"
-            >
-            <GMapMarker
-              :position="centerMarker"
-            />
-            </GMapMap>
-        </td>
-        <td> <div id="mapContainer"></div></td>
-      </tr>
-    </table>
+  <div class="mapsContainer">
+    <div>
+      <GMapMap
+        :center="centerMap"
+        :zoom="6.8"
+        map-type-id="terrain"
+        style="width: 38vw; height: 315px;text-align:left;"
+        @click="toParent"
+      >
+      <GMapMarker
+        :position="centerMarker"
+      />
+      </GMapMap>
+    </div>
+    <div>
+      <label>Terminaator joone kuupäeva ja kellaaeg: </label>
+      <el-date-picker
+        v-model="date"
+        type="datetime" 
+        :clearable="false"
+        placeholder="Vali kuupäev"
+        border:none
+        @change="onTermDateChange()"
+        />
+      <div id="mapContainer"></div>
+    </div>
   </div>
 </template>
 
@@ -52,33 +44,25 @@ export default {
     }
   },
   methods: {
-    /**
-     * Meetod nii Google map-i kui ka selle markeri asukoha muutmiseks (kui kasutaja manuaaselt kordinaate muudab)
-     */
+      // Method for changing map and marker coordinates with user input
       change(mapcords){
         this.centerMap.lat = mapcords.lat
         this.centerMap.lng = mapcords.lng
         this.centerMarker.lat = mapcords.lat
         this.centerMarker.lng = mapcords.lng
       },
-      /**
-       * Meetod Google map-i kordinaatide ahelas üles LatLong-ile emittimiseks
-       */
+      // Method for emitting map coordinates to parent component
       toParent(event){
           this.centerMarker.lat = event.latLng.lat()
           this.centerMarker.lng = event.latLng.lng()
           this.$emit('mapcords',this.centerMarker)
       },
-      /**
-       * Meetod terminaator joone mapi kuvatava kuupäeva ja kellaaja muutmiseks 
-       */
+      // Method for changing terminator date time display
       onTermDateChange(){
           this.terminator.setTime(this.date)
       }
   },
-  /**
-   * Esmalt komponent renderdades loo Leaflet map ja pane sinna terminator(öö/päeva piirjoon) layer peale
-   */
+  //Upon loading render leaflet map with the terminator layer
   mounted() {
     this.leafletMap = L.map("mapContainer").setView([15,30], 1);
     L.tileLayer("http://{s}.tile.osm.org/{z}/{x}/{y}.png").addTo(this.leafletMap);
@@ -94,8 +78,8 @@ export default {
     height: 315px;
     margin:0 auto;
 }
-#mapsTable{
-    text-align: left;
-    border-spacing: 0;
+.mapsContainer{
+  display: flex;
+  align-items: flex-end;
 }
 </style>
