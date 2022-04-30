@@ -110,6 +110,9 @@ export default {
             const endHour = endTime.getHours()
             const endMinute =  endTime.getMinutes()
             if (isNaN(startHour) || isNaN(endHour)) return " puudub etteantud kuupäeval"
+            const formatedDiff = this.dateDiffTime(startTime,endTime)
+            let ending = ""
+            formatedDiff.startsWith("00:") ?  ending = " minutit." :ending = " tundi." 
 
             return " kuupäevade " + startTime.getDate().toString().padStart(2,"0")+":"+startTime.getMonth().toString().padStart(2,"0") +
                     " - "+ endTime.getDate().toString().padStart(2,"0")+":"+endTime.getMonth().toString().padStart(2,"0")+
@@ -117,8 +120,8 @@ export default {
                     startHour.toString().padStart(2,"0") + ":" + startMinute.toString().padStart(2,"0") +
                     " - " + endHour.toString().padStart(2,"0") + ":" + endMinute.toString().padStart(2,"0") +
                     " ning kestab " +
-                    this.dateDiffTime(startTime,endTime) +
-                    " tundi"
+                    formatedDiff +
+                    ending
         },
         // Method for getting coordinates from Google map and calulating last clickked button data
          
