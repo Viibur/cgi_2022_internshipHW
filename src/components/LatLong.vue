@@ -26,8 +26,8 @@
     <button type="button" v-on:click="nightLengthAstronomical();setMapScreen();"> Arvuta astronoomiline öö </button><br>
     <button class="lowerButton" type="button" v-on:click="nightLengthSunsetToSunrise();setMapScreen();"> Arvuta horisondi suhtes öö </button>
     </form>
-    <p>  {{ nightLengthPrev }} </p>
-    <p> {{ nightLengthCurr }} </p>
+    <p>  {{ nightLengthPrevious }} </p>
+    <p> {{ nightLengthCurrent }} </p>
     <MapElem v-on:mapcords="cordsFromMap" ref="map" />
     </div>
 </template>
@@ -44,8 +44,8 @@ export default {
         latitude: 58.38156156810358,
         longitude: 26.73048025196609,
         date: new Date(), 
-        nightLengthPrev: null,
-        nightLengthCurr: null,
+        nightLengthPrevious: null,
+        nightLengthCurrent: null,
         mapcords: {lat: 58.38156156810358, lng: 26.73048025196609},
         lastButtonClicked: "astronomical", //Can be 'astronomical' or 'horizon' based on the last button clicked
         }),
@@ -64,14 +64,14 @@ export default {
             const nightEndToday = new Date(this.date.getTime() + 86400000)
             const startTimeYesterday = SunCalc.getTimes(nightBeginYesterday,this.latitude,this.longitude).nauticalDusk
             const endTimeToday = SunCalc.getTimes(nightEndToday,this.latitude,this.longitude).nauticalDawn
-            this.nightLengthPrev = "Astronoomiline öö"+this.formatAnswer(startTimeYesterday,endTimeToday)
+            this.nightLengthPrevious = "Astronoomiline öö"+this.formatAnswer(startTimeYesterday,endTimeToday)
 
             //Night length for the night that starts from the given date
             const nightBeginToday = new Date(this.date.getTime() + 86400000)
             const nightEndTomorrow = new Date(this.date.getTime() + 2*86400000)
             const startTimeToday = SunCalc.getTimes(nightBeginToday,this.latitude,this.longitude).nauticalDusk
             const endTimeTomorrow = SunCalc.getTimes(nightEndTomorrow,this.latitude,this.longitude).nauticalDawn
-            this.nightLengthCurr = "Astronoomiline öö"+this.formatAnswer(startTimeToday,endTimeTomorrow)
+            this.nightLengthCurrent = "Astronoomiline öö"+this.formatAnswer(startTimeToday,endTimeTomorrow)
         },
         /**
          * Method for calculating night length sunrise to sunset
@@ -87,19 +87,17 @@ export default {
             const nightEndToday = new Date(this.date.getTime() + 86400000)
             const startTimeYesterday = SunCalc.getTimes(nightBeginYesterday,this.latitude,this.longitude).sunset
             const endTimeToday = SunCalc.getTimes(nightEndToday,this.latitude,this.longitude).sunrise
-            this.nightLengthPrev = "Horisondi suhtes öö"+this.formatAnswer(startTimeYesterday,endTimeToday)
+            this.nightLengthPrevious = "Horisondi suhtes öö"+this.formatAnswer(startTimeYesterday,endTimeToday)
 
             //Night length for the night that starts from the given date
             const nightBeginToday = new Date(this.date.getTime() + 86400000)
             const nightEndTomorrow = new Date(this.date.getTime() + 2*86400000)
             const startTimeToday = SunCalc.getTimes(nightBeginToday,this.latitude,this.longitude).sunset
             const endTimeTomorrow = SunCalc.getTimes(nightEndTomorrow,this.latitude,this.longitude).sunrise
-            this.nightLengthCurr = "Horisondi suhtes öö"+this.formatAnswer(startTimeToday,endTimeTomorrow)
+            this.nightLengthCurrent = "Horisondi suhtes öö"+this.formatAnswer(startTimeToday,endTimeTomorrow)
         },
-        /**
-         * Abimeetod kahe kuupäeva vahelise hh:mm vahe arvutamiseks
-         */
-        dateDiff(dateBegin, dateEnd){
+        // Method for calculating the time between two dates in hh:mm format
+        dateDiffTime(dateBegin, dateEnd){
             const duration = dateEnd.getTime() - dateBegin.getTime()
             const minutes = Math.floor((duration / (1000 * 60)) % 60)
             const hours = Math.floor((duration / (1000 * 60 * 60)) % 24)
@@ -119,21 +117,19 @@ export default {
                     startHour.toString().padStart(2,"0") + ":" + startMinute.toString().padStart(2,"0") +
                     " - " + endHour.toString().padStart(2,"0") + ":" + endMinute.toString().padStart(2,"0") +
                     " ning kestab " +
-                    this.dateDiff(startTime,endTime) +
+                    this.dateDiffTime(startTime,endTime) +
                     " tundi"
         },
-        /**
-         * Method for getting coordinates from Google map and calulating last clickked button data
-         */
+        // Method for getting coordinates from Google map and calulating last clickked button data
+         
         cordsFromMap(center){
             this.latitude = center.lat
             this.longitude = center.lng
             if (this.lastButtonClicked === "astronomical") this.nightLengthAstronomical();
             else this.nightLengthSunsetToSunrise();
         },
-        /**
-         * Method for setting map cordinates from user input
-         */
+        // Method for setting map cordinates from user input
+         
         setMapScreen(){
             this.mapcords.lat = this.latitude
             this.mapcords.lng = this.longitude
@@ -141,7 +137,7 @@ export default {
         }
     },
     mounted(){
-        //On load data and map cords
+        //On load, load data and map cords
         this.nightLengthAstronomical()
         this.$refs.map.change(this.mapcords)
     },

@@ -74,7 +74,7 @@ export default {
 </script>
 <style scoped>
 #mapContainer {
-    width: 38vw; 
+    width: 38vw;
     height: 315px;
     margin-left: 0;
 }
