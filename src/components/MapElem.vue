@@ -76,10 +76,11 @@ export default {
 #mapContainer {
     width: 38vw; 
     height: 315px;
-    margin:0 auto;
+    margin-left: 0;
 }
 .mapsContainer{
   display: flex;
   align-items: flex-end;
+  flex-wrap: wrap;
 }
 </style>
