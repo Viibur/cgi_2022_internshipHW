@@ -22,7 +22,7 @@
                 :center="centerMap"
                 :zoom="6.8"
                 map-type-id="terrain"
-                style="width: 39vw; height: 315px;text-align:left;"
+                style="width: 38vw; height: 315px;text-align:left;"
                 @click="toParent"
             >
             <GMapMarker
@@ -82,13 +82,15 @@ export default {
   mounted() {
     this.leafletMap = L.map("mapContainer").setView([15,30], 1);
     L.tileLayer("http://{s}.tile.osm.org/{z}/{x}/{y}.png").addTo(this.leafletMap);
+    this.leafletMap.touchZoom.disable();
+    this.leafletMap.doubleClickZoom.disable();
     this.terminator = terminator().addTo(this.leafletMap)
   },
 }
 </script>
 <style scoped>
 #mapContainer {
-    width: 39vw; 
+    width: 38vw; 
     height: 315px;
     margin:0 auto;
 }
