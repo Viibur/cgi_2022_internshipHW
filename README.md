@@ -15,4 +15,5 @@ npm run serve
 npm run build
 ```
 
-Commit didn't go through and Readme.md didn't update. Adding (wiki)[https://github.com/Viibur/cgi_2022_internshipHW/wiki/Tervist-minu-CGI-2022-suveprojekti-wikisse!] link for ease of access
+Commit didn't go through and Readme.md didn't update. Adding wiki link for ease of access.
+https://github.com/Viibur/cgi_2022_internshipHW/wiki/Tervist-minu-CGI-2022-suveprojekti-wikisse!
