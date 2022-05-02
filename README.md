@@ -15,5 +15,4 @@ npm run serve
 npm run build
 ```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+Commit didn't go through and Readme.md didn't update. Adding (wiki)[https://github.com/Viibur/cgi_2022_internshipHW/wiki/Tervist-minu-CGI-2022-suveprojekti-wikisse!] link for ease of access
